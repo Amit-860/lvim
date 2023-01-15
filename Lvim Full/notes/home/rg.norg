@@ -1,0 +1,5 @@
+* rigGrep
+  - to find file with file_name : rg --files -iglob "/filename/" "/path_where_to_search/"
+  - to search word : rg -w "/pattern_to_searhc/" "/path_where_to_search/"
+  - to get file names of file containing word of given pattern : rg -l "/patttern_to_search/" "/path_where_to_search/"
+  - NOTE use --hidden flag to search in hidden files or directories
