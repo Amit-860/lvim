@@ -1,6 +1,0 @@
-- use 'gn' : to select the word
-- for my case use <leader>ss to highlight same word
-- then press *cgn* to change that word
-- press '.' To repeat that action for next word
-- or n to skip word
-
