@@ -22,17 +22,8 @@ function M.config()
             sorting_strategy = nil,
             layout_strategy = nil,
             layout_config = {},
-            vimgrep_arguments = {
-                "rg",
-                "--color=never",
-                "--no-heading",
-                "--with-filename",
-                "--line-number",
-                "--column",
-                "--smart-case",
-                "--hidden",
-                "--glob=!.git/",
-            },
+            vimgrep_arguments = { "rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column",
+                "--smart-case", "--hidden", "--glob=!.git/" },
             ---@usage Mappings are fully customizable. Many familiar mapping patterns are setup as defaults.
             mappings = {
                 i = {
@@ -45,7 +36,7 @@ function M.config()
                         actions.smart_send_to_qflist(...)
                         actions.open_qflist(...)
                     end,
-                    ["<CR>"] = actions.select_default,
+                    ["<CR>"] = actions.select_default
                 },
                 n = {
                     ["<C-n>"] = actions.move_selection_next,
@@ -53,8 +44,8 @@ function M.config()
                     ["<C-q>"] = function(...)
                         actions.smart_send_to_qflist(...)
                         actions.open_qflist(...)
-                    end,
-                },
+                    end
+                }
             },
             file_ignore_patterns = {},
             path_display = { "smart" },
@@ -62,21 +53,23 @@ function M.config()
             border = {},
             borderchars = nil,
             color_devicons = true,
-            set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+            set_env = {
+                ["COLORTERM"] = "truecolor"
+            } -- default = nil,
         },
         pickers = {
             find_files = {
                 hidden = true,
-                previewer = true,
+                previewer = true
             },
             live_grep = {
-                --@usage don't include the filename in the search results
+                -- @usage don't include the filename in the search results
                 only_sort_text = true,
-                previewer = true,
+                previewer = true
             },
             grep_string = {
                 only_sort_text = true,
-                previewer = true,
+                previewer = true
             },
             buffers = {
                 initial_mode = "insert",
@@ -84,44 +77,44 @@ function M.config()
                 previewer = false,
                 mappings = {
                     i = {
-                        ["<C-d>"] = actions.delete_buffer,
+                        ["<C-d>"] = actions.delete_buffer
                     },
                     n = {
-                        ["dd"] = actions.delete_buffer,
-                    },
-                },
+                        ["dd"] = actions.delete_buffer
+                    }
+                }
             },
             planets = {
                 show_pluto = true,
-                show_moon = true,
+                show_moon = true
             },
             git_files = {
                 hidden = true,
                 show_untracked = true,
-                previewer = true,
+                previewer = true
             },
             colorscheme = {
-                enable_preview = true,
+                enable_preview = true
             },
             lsp_references = {
                 -- theme = "dropdown",
                 theme = "ivy",
-                initial_mode = "normal",
+                initial_mode = "normal"
             },
             lsp_definitions = {
                 -- theme = "dropdown",
                 theme = "ivy",
-                initial_mode = "normal",
+                initial_mode = "normal"
             },
             lsp_declarations = {
                 -- theme = "dropdown",
                 theme = "ivy",
-                initial_mode = "normal",
+                initial_mode = "normal"
             },
             lsp_implementations = {
                 -- theme = "dropdown",
                 theme = "ivy",
-                initial_mode = "normal",
+                initial_mode = "normal"
             },
             spell_suggest = {
                 theme = "dropdown",
@@ -133,48 +126,53 @@ function M.config()
                 fuzzy = true,                   -- false will only do exact matching
                 override_generic_sorter = true, -- override the generic sorter
                 override_file_sorter = true,    -- override the file sorter
-                case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+                case_mode = "smart_case"        -- or "ignore_case" or "respect_case"
             },
             lsp_handlers = {
                 disable = {},
                 location = {
                     telescope = require('telescope.themes').get_ivy({}),
-                    no_results_message = 'No references found',
+                    no_results_message = 'No references found'
                 },
                 symbol = {
                     telescope = require('telescope.themes').get_ivy({}),
-                    no_results_message = 'No symbols found',
+                    no_results_message = 'No symbols found'
                 },
                 call_hierarchy = {
                     telescope = require('telescope.themes').get_ivy({}),
-                    no_results_message = 'No calls found',
+                    no_results_message = 'No calls found'
                 },
                 code_action = {
                     telescope = require('telescope.themes').get_dropdown({}),
                     no_results_message = 'No code actions available',
-                    prefix = '',
-                },
+                    prefix = ''
+                }
             },
             undo = {
-                use_delta = true,
+                use_delta = false,
                 use_custom_command = nil, -- setting this implies `use_delta = false`. Accepted format is: { "bash", "-c", "echo '$DIFF' | delta" }
-                side_by_side = true,
+                layout_strategy = "vertical",
+                layout_config = {
+                    preview_height = 0.6,
+                },
+                side_by_side = false,
                 diff_context_lines = vim.o.scrolloff,
                 entry_format = "state #$ID, $STAT, $TIME",
                 time_format = "",
-                layout_strategy = "vertical",
-                layout_config = {
-                    preview_height = 0.55,
-                },
                 mappings = {
-                    i = {
-                        ["<cr>"] = require("telescope-undo.actions").yank_additions,
-                        ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
-                        ["<C-cr>"] = require("telescope-undo.actions").restore,
+                    n = {
+                        -- IMPORTANT: Note that telescope-undo must be available when telescope is configured if
+                        -- you want to replicate these defaults and use the following actions. This means
+                        -- installing as a dependency of telescope in it's `requirements` and loading this
+                        -- extension from there instead of having the separate plugin definition as outlined
+                        -- above.
+                        ["y"] = require("telescope-undo.actions").yank_additions,
+                        ["Y"] = require("telescope-undo.actions").yank_deletions,
+                        ["u"] = require("telescope-undo.actions").restore,
                     },
                 },
             },
-        },
+        }
     }
 end
 
@@ -187,7 +185,7 @@ function M.setup()
         grep_previewer = previewers.vim_buffer_vimgrep.new,
         qflist_previewer = previewers.vim_buffer_qflist.new,
         file_sorter = sorters.get_fuzzy_file,
-        generic_sorter = sorters.get_generic_fuzzy_sorter,
+        generic_sorter = sorters.get_generic_fuzzy_sorter
     }, lvim.builtin.telescope)
 
     local telescope = require "telescope"

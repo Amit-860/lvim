@@ -48,7 +48,7 @@ M.config = function()
             window = {
                 border = "single",        -- none, single, double, shadow
                 position = "bottom",      -- bottom, top
-                margin = { 0, 4, 0, 3 },  -- extra window margin [top, right, bottom, left]
+                margin = { 0, 4, 1, 3 },  -- extra window margin [top, right, bottom, left]
                 padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
                 winblend = 0,
             },
@@ -336,6 +336,7 @@ M.setup = function()
             i = { "<cmd>Telescope lsp_implementations<cr>", "Implementation" },
             s = { "<cmd>Telescope lsp_document_symbols<cr>", "Symbols" },
             q = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
+            S = { "<cmd>SymbolsOutline<CR>", "Symbols Outline" }
         },
         g = { "<cmd>lua require 'lvim.core.terminal'.git_ui_toggle()<cr>", 'Git UI' }
     }, { prefix = "<Tab>" })

@@ -1,7 +1,6 @@
 -- Read the docs: https://www.lunarvim.org/docs/configuration
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
-vim.g.neovide_cursor_unfocused_outline_width = 0.125
 -- Discord: https://discord.com/invite/Xb9B4Ny
 -- Enable powershell as your default shell
 vim.opt.shell = "pwsh.exe -NoLogo"
@@ -51,10 +50,11 @@ if vim.g.neovide then
     vim.g.neovide_cursor_unfocused_outline_width = 0.05
 
     lvim.transparent_window = false
-    lvim.colorscheme = "gruvbox"
+    lvim.colorscheme = "terafox"
     -- lvim.colorscheme = "nightfly"
 else
     lvim.transparent_window = true
+    -- lvim.colorscheme = "catppuccin-mocha"
     lvim.colorscheme = "nightfox"
 end
 
@@ -62,10 +62,7 @@ end
 lvim.format_on_save.enabled = true
 
 -- lvim.colorscheme = "tokyonight"
--- lvim.colorscheme = "github_dark_default"
--- lvim.colorscheme = "github_dark_colorblind"
--- lvim.colorscheme = "gruvbox-material"
--- lvim.colorscheme = "catppuccin-frappe"
+-- lvim.colorscheme = "githdark_colorblind"
 -- lvim.colorscheme = "catppuccin-macchiato"
 -- lvim.colorscheme = "catppuccin"
 
@@ -94,24 +91,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
-vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])
-lvim.builtin.indentlines.options.show_current_context = false
-lvim.builtin.indentlines.options.show_current_context_start = false
-lvim.builtin.indentlines.options.show_end_of_line = false
-lvim.builtin.indentlines.options.space_char_blankline = " "
-lvim.builtin.indentlines.options.char_highlight_list = {
-    -- "IndentBlanklineIndent1",
-    -- "IndentBlanklineIndent2",
-    -- "IndentBlanklineIndent3",
-    -- "IndentBlanklineIndent4",
-    -- "IndentBlanklineIndent5",
-    -- "IndentBlanklineIndent6",
-}
+lvim.builtin.indentlines.active = false
 
 lvim.leader = "space"
 
@@ -124,7 +104,6 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<C-S>"] = ":wa<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
--- lvim.keys.normal_mode["<C-z>"] = ":UndotreeToggle<CR>"
 lvim.keys.normal_mode["<C-z>"] = ":Telescope undo<CR>"
 lvim.keys.normal_mode["<F5>"] = ":DapContinue<CR>"
 lvim.keys.normal_mode["<F7>"] = ":DapToggleBreakpoint<CR>"
@@ -135,14 +114,17 @@ lvim.keys.normal_mode["<tab>s"] = ":Telescope spell_suggest<CR>"
 lvim.keys.normal_mode["<C-q>"] = ":close<CR>"
 
 vim.keymap.set("v", "<Bs>", '"_d')
-
 vim.keymap.set("n", "<C-_>", "<Plug>(comment_toggle_linewise_current)")
-vim.keymap.set(
-    { "n" },
-    "<M-k>",
-    "<cmd>lua require('ts-node-action').node_action()<cr>",
-    { desc = "Trigger Node Action" }
-)
+vim.keymap.set({ "n" }, "<M-.>", "<cmd>lua require('ts-node-action').node_action()<cr>", { desc = "Trigger Node Action" })
+
+vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>",
+    { desc = "Spider-w", noremap = true })
+vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>",
+    { desc = "Spider-e", noremap = true })
+vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>",
+    { desc = "Spider-b", noremap = true })
+vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>",
+    { desc = "Spider-ge", noremap = true })
 
 lvim.builtin.which_key.mappings["p"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["<leader>"] = { "<cmd>Telescope buffers<CR>", "which_key_ignore" }
@@ -150,8 +132,8 @@ lvim.builtin.which_key.mappings["E"] = { "<Plug>(Scalpel)", "Scalpel" }
 lvim.builtin.which_key.mappings["m"] = {
     name = "Harpoon",
     -- h = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Harpoon" },
-    m = { "<cmd>Telescope harpoon marks<cr>", "Marked Files" },
-    a = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" },
+    a = { "<cmd>Telescope harpoon marks<cr>", "Show Marked Files" },
+    m = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Mark File" },
 }
 lvim.builtin.which_key.mappings["t"] = {
     name = "+Trouble",
@@ -173,8 +155,8 @@ lvim.builtin.which_key.mappings["z"] = {
         h = { "<CMD>DiffviewFileHistory %<CR>", "Open File History for Current File" },
         H = { "<CMD>DiffviewFileHistory<CR>", "Open File History" },
     },
-    t = { "<cmd>lua require 'lvim.core.terminal'.tig_ui_toggle()<cr>", "Tig" }
-
+    t = { "<cmd>lua require 'lvim.core.terminal'.tig_ui_toggle()<cr>", "Tig" },
+    -- z = { "<cmd>ZenMode<CR>", "Zen Mode" }
 }
 
 local _, actions = pcall(require, "telescope.actions")
@@ -197,7 +179,7 @@ lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "ui-select")
     pcall(telescope.load_extension, "harpoon")
     pcall(telescope.load_extension, "lsp_handlers")
-    pcall(telescope.load_extension, "bookmarks")
+    pcall(telescope.load_extension, "vim_bookmarks")
     pcall(telescope.load_extension, "undo")
 end
 
@@ -220,6 +202,7 @@ lvim.builtin.treesitter.incremental_selection.enable = true
 lvim.builtin.treesitter.textobjects.swap.enable = true
 lvim.builtin.treesitter.textobjects.select.enable = true
 lvim.builtin.treesitter.textobjects.move.enable = true
+lvim.builtin.cmp.cmdline.enable = true
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -297,17 +280,6 @@ lvim.plugins = {
         },
     },
     {
-        "loctvl842/monokai-pro.nvim",
-        lazy = false,
-        priority = 1000,
-        opts = {
-            background_clear = {
-                "toggleterm", "telescope", "float_win", "which_key"
-            }
-        }
-
-    },
-    {
         "ellisonleao/gruvbox.nvim",
         lazy = false,
         priority = 1000,
@@ -352,40 +324,6 @@ lvim.plugins = {
         end,
     },
     { "wincent/scalpel" },
-    -- {
-    --     "phaazon/hop.nvim",
-    --     event = "BufRead",
-    --     config = function()
-    --         local hop = require("hop")
-    --         hop.setup()
-    --         vim.keymap.set("", "t", function()
-    --             hop.hint_char1({
-    --                 current_line_only = true,
-    --             })
-    --         end, {
-    --             silent = true,
-    --         })
-    --         vim.keymap.set("v", "t", function()
-    --             hop.hint_char1({
-    --                 current_line_only = true,
-    --             })
-    --         end, {
-    --             silent = true,
-    --         })
-
-    --         vim.keymap.set("", "f", function()
-    --             hop.hint_char2() -- hint_offset = 1
-    --         end, {
-    --             silent = true,
-    --         })
-    --         vim.keymap.set("v", "f", function()
-    --             hop.hint_char2()
-    --         end, {
-    --             silent = true,
-    --         })
-    --     end,
-    -- },
-    { "mbbill/undotree" },
     { "gbrlsnchs/telescope-lsp-handlers.nvim" },
     {
         "ray-x/lsp_signature.nvim",
@@ -401,7 +339,7 @@ lvim.plugins = {
         config = function()
             require("better_escape").setup({
                 mapping = { "jk" },        -- a table with mappings to use
-                timeout = 300,             -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+                timeout = 500,             -- the time in which the keys must be hit in ms. Use option timeoutlen by default
                 clear_empty_lines = false, -- clear line after escaping if there is only whitespace
                 keys = "<Esc>",            -- keys used for escaping, if it is a function will use the result everytime
                 -- example(recommended)
@@ -611,99 +549,50 @@ lvim.plugins = {
         opts = {},
     },
     { "tpope/vim-repeat" },
-    {
-        'tomasky/bookmarks.nvim',
-        event = "VimEnter",
-        priority = 0,
-        config = function()
-            require('bookmarks').setup({
-                -- sign_priority = 8,  --set bookmark sign priority to cover other sign
-                save_file = vim.fn.expand "$HOME/.bookmarks", -- bookmarks save file path
-                keywords = {
-                    ["@t"] = "☑️ ",                       -- mark annotation startswith @t ,signs this icon as `Todo`
-                    ["@w"] = "⚠️ ",                       -- mark annotation startswith @w ,signs this icon as `Warn`
-                    ["@f"] = "⛏ ",                          -- mark annotation startswith @f ,signs this icon as `Fix`
-                    ["@n"] = " ",                          -- mark annotation startswith @n ,signs this icon as `Note`
-                },
-                on_attach = function(bufnr)
-                    local bm = require "bookmarks"
-                    local map = vim.keymap.set
-                    map("n", "mm", bm.bookmark_toggle, { desc = "Bookmark Toggle" })                -- add or remove bookmark at current line
-                    map("n", "mi", bm.bookmark_ann, { desc = "Bookmark Annotation" })               -- add or edit mark annotation at current line
-                    map("n", "mc", bm.bookmark_clean, { desc = "Bookmark Clean" })                  -- clean all marks in local buffer
-                    map("n", "mn", bm.bookmark_next, { desc = "Bookmark Next" })                    -- jump to next mark in local buffer
-                    map("n", "mp", bm.bookmark_prev, { desc = "Bookmark Prev" })                    -- jump to previous mark in local buffer
-                    -- map("n", "ml", bm.bookmark_list)                                                          -- show marked file list in quickfix window
-                    map("n", "ml", "<CMD>Telescope bookmarks list<CR>", { desc = "Bookmark List" }) -- show marked file list in quickfix window
-                end,
-            })
-        end
-    },
     -- {
-    --     "karb94/neoscroll.nvim",
-    --     event = "WinScrolled",
+    --     "folke/noice.nvim",
+    --     -- cond = not vim.g.neovide,
+    --     event = "VeryLazy",
+    --     opts = {},
+    --     dependencies = { "MunifTanjim/nui.nvim" },
     --     config = function()
-    --         require('neoscroll').setup({
-    --             -- All these keys will be mapped to their corresponding default scrolling animation
-    --             mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
-    --                 '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
-    --             hide_cursor = true,          -- Hide cursor while scrolling
-    --             stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-    --             use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-    --             respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-    --             cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-    --             easing_function = nil,       -- Default easing function
-    --             pre_hook = nil,              -- Function to run before the scrolling animation starts
-    --             post_hook = nil,             -- Function to run after the scrolling animation ends
+    --         require("noice").setup({
+    --             lsp = {
+    --                 progress = {
+    --                     enabled = false,
+    --                     -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
+    --                     -- See the section on formatting for more details on how to customize.
+    --                     -- @type NoiceFormat|string
+    --                     format = "lsp_progress",
+    --                     -- @type NoiceFormat|string
+    --                     format_done = "lsp_progress_done",
+    --                     throttle = 1000 / 30, -- frequency to update lsp progress message
+    --                     view = "mini",
+    --                 },
+    --                 -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    --                 override = {
+    --                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+    --                     ["vim.lsp.util.stylize_markdown"] = true,
+    --                     ["cmp.entry.get_documentation"] = true,
+    --                 },
+    --                 signature = {
+    --                     enabled = false,
+    --                 },
+    --                 hover = {
+    --                     enabled = false,
+    --                 },
+    --             },
+    --             routes = { { view = "cmdline", filter = { event = "msg_showmode" } } },
+    --             presets = {
+    --                 bottom_search = false,        -- use a classic bottom cmdline for search
+    --                 command_palette = false,      -- position the cmdline and popupmenu together
+    --                 long_message_to_split = true, -- long messages will be sent to a split
+    --                 inc_rename = true,            -- enables an input dialog for inc-rename.nvim
+    --                 lsp_doc_border = false,       -- add a border to hover docs and signature help
+    --             },
     --         })
-    --     end
+    --     end,
     -- },
-    {
-        "folke/noice.nvim",
-        cond = not vim.g.neovide,
-        event = "VeryLazy",
-        opts = {},
-        dependencies = { "MunifTanjim/nui.nvim" },
-        config = function()
-            require("noice").setup({
-                lsp = {
-                    progress = {
-                        enabled = true,
-                        -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-                        -- See the section on formatting for more details on how to customize.
-                        -- @type NoiceFormat|string
-                        format = "lsp_progress",
-                        -- @type NoiceFormat|string
-                        format_done = "lsp_progress_done",
-                        throttle = 1000 / 30, -- frequency to update lsp progress message
-                        view = "mini",
-                    },
-                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-                    override = {
-                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                        ["vim.lsp.util.stylize_markdown"] = true,
-                        ["cmp.entry.get_documentation"] = true,
-                    },
-                    signature = {
-                        enabled = false,
-                    },
-                    hover = {
-                        enabled = false,
-                    },
-                },
-                presets = {
-                    bottom_search = false,        -- use a classic bottom cmdline for search
-                    command_palette = false,      -- position the cmdline and popupmenu together
-                    long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = true,            -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = false,       -- add a border to hover docs and signature help
-                },
-            })
-        end,
-    },
-    {
-        "debugloop/telescope-undo.nvim",
-    },
     {
         "folke/flash.nvim",
         event = "VeryLazy",
@@ -711,6 +600,9 @@ lvim.plugins = {
             modes = {
                 char = {
                     jump_labels = true
+                },
+                search = {
+                    enabled = false
                 }
             },
 
@@ -718,7 +610,7 @@ lvim.plugins = {
         keys = {
             { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
             {
-                "S",
+                "<M-s>",
                 mode = { "n", "o", "x" },
                 function() require("flash").treesitter() end,
                 desc =
@@ -731,12 +623,47 @@ lvim.plugins = {
                 desc = "Flash Treesitter"
             },
             {
-                "//",
-                mode = { "c" },
+                "<M-/>",
+                mode = { "n" },
                 function() require("flash").toggle() end,
                 desc =
                 "Toggle Flash Search"
             },
         },
-    }
+    },
+    {
+        "MattesGroeger/vim-bookmarks"
+    },
+    {
+        "tom-anders/telescope-vim-bookmarks.nvim",
+        config = function()
+            vim.keymap.set("n", "ma", "<cmd>Telescope vim_bookmarks<cr>",
+                { noremap = true, desc = "Telescope Bookmarks" })
+        end
+    },
+    {
+        "debugloop/telescope-undo.nvim",
+    },
+    -- {
+    --     "folke/zen-mode.nvim",
+    --     opts = {
+    --         -- your configuration comes here
+    --         -- or leave it empty to use the default settings
+    --         -- refer to the configuration section below
+    --     },
+    -- },
+    {
+        "chrisgrieser/nvim-spider",
+        lazy = true,
+        config = function()
+        end
+    },
+    {
+        'simrat39/symbols-outline.nvim',
+        opts = {
+            autofold_depth = 2,
+            auto_unfold_hover = false
+        },
+    },
+    { "shellRaining/hlchunk.nvim", event = { "UIEnter" }, opts = {} },
 }

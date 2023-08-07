@@ -182,7 +182,7 @@ let light_theme = {
 
 # The default config record. This is where much of your global configuration is setup.
 $env.config = {
-    show_banner: true # true or false to enable or disable the welcome banner at startup
+    show_banner: false # true or false to enable or disable the welcome banner at startup
 
     ls: {
         use_ls_colors: true # use the LS_COLORS environment variable to colorize output
@@ -249,7 +249,7 @@ $env.config = {
         max_size: 1000 # Session has to be reloaded for this to take effect
         sync_on_enter: true # Enable to share history between multiple sessions, else you have to close the session to write history to file
         file_format: "sqlite" # "sqlite" or "plaintext"
-        isolation: true # only available with sqlite file_format. true enables history isolation, false disables it. true will allow the history to be isolated to the current session using up/down arrows. false will allow the history to be shared across all sessions.
+        isolation: false # only available with sqlite file_format. true enables history isolation, false disables it. true will allow the history to be isolated to the current session using up/down arrows. false will allow the history to be shared across all sessions.
     }
 
     completions: {
@@ -617,13 +617,6 @@ $env.config = {
             event: {edit: delete}
         }
         {
-            name: delete_one_character_forward
-            modifier: control
-            keycode: char_h
-            mode: [emacs, vi_insert]
-            event: {edit: backspace}
-        }
-        {
             name: delete_one_word_backward
             modifier: control
             keycode: char_w
@@ -822,3 +815,6 @@ use ~/nu/nu_scripts/custom-completions/git/git-completions.nu *
 use ~/nu/nu_scripts/custom-completions/npm/npm-completions.nu *
 use ~/nu/nu_scripts/custom-completions/scoop/scoop-completions.nu *
 use ~/nu/nu_scripts/custom-completions/yarn/yarn-completion.nu *
+use ~/nu/nu_scripts/modules/maths/math_functions.nu *
+
+fastfetch --logo-padding-top 2 --logo-padding-left 3
