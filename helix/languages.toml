@@ -1,0 +1,68 @@
+# [language-server]
+# rome = { command = "rome", args = ["lsp-proxy"] }
+
+
+[[language]]
+name = "javascript"
+auto-format = true
+comment-token = "//"
+file-types = ["js", "mjs", "cjs"]
+injection-regex = "(js|javascript)"
+language-id = "javascript"
+# language-servers = [{name = "typescript-language-server"}, "rome"]
+language-servers = [{name = "typescript-language-server"}]
+roots = ["package.json"]
+scope = "source.js"
+shebangs = ["node"]
+indent = { tab-width = 4, unit = "    " }
+
+[language-server.typescript-language-server.config.format]
+semicolons = "insert"
+insertSpaceBeforeFunctionParenthesis = true
+
+[language-server.typescript-language-server.config.preferences]
+quotePreference = "single"
+
+[language-server.typescript-language-server.config.javascript.inlayHints]
+includeInlayEnumMemberValueHints = true
+includeInlayFunctionLikeReturnTypeHints = true
+includeInlayFunctionParameterTypeHints = true
+includeInlayParameterNameHints = "all"
+includeInlayParameterNameHintsWhenArgumentMatchesName = true
+includeInlayPropertyDeclarationTypeHints = true
+includeInlayVariableTypeHints = true
+includeInlayVariableTypeHintsWhenTypeMatchesName = true
+
+[language-server.typescript-language-server.config.typescript.inlayHints]
+includeInlayEnumMemberValueHints = true
+includeInlayFunctionLikeReturnTypeHints = true
+includeInlayFunctionParameterTypeHints = true
+includeInlayParameterNameHints = "all"
+includeInlayParameterNameHintsWhenArgumentMatchesName = true
+includeInlayPropertyDeclarationTypeHints = true
+includeInlayVariableTypeHints = true
+includeInlayVariableTypeHintsWhenTypeMatchesName = true
+
+# [[language]]
+# name = "javascript"
+# auto-format = true
+# indent = { tab-width = 4, unit = "    " }
+# language-servers = ["typescript-language-server", "rome"]
+# formatter = {
+#     command = "rome format --stdin-file-path ${INPUT}"
+# }
+
+[[language]]
+name = "python"
+scope = "source.python"
+injection-regex = "python"
+file-types = ["py","pyi","py3","pyw","ptl",".pythonstartup",".pythonrc","SConstruct"]
+shebangs = ["python"]
+roots = ["setup.py", "setup.cfg", "pyproject.toml"]
+comment-token = "#"
+language-servers = ["pyright"]
+indent = { tab-width = 4, unit = "    " }
+# will get "Async jobs timed out" errors if this empty config is not added
+formatter = {command = "black", args = ["--quiet", "-"]}
+auto-format = true
+diagnostic-severity = "Hint"

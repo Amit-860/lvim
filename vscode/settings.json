@@ -1,0 +1,98 @@
+{
+	"security.workspace.trust.untrustedFiles": "open",
+	"editor.fontFamily": "JetBrainsMono Nerd Font Mono,Consolas, 'Courier New', monospace",
+	"workbench.colorTheme": "Nightfox",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[javascript]": {
+		"editor.defaultFormatter": "rome.rome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "rome.rome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "rome.rome"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "rome.rome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "rome.rome"
+	},
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true,
+	"editor.formatOnSave": true,
+	"vim.easymotion": true,
+	"vim.incsearch": true,
+	"vim.useSystemClipboard": true,
+	"vim.useCtrlKeys": true,
+	"vim.hlsearch": true,
+	"vim.insertModeKeyBindings": [
+		{
+			"before": ["j", "k"],
+			"after": ["<Esc>"]
+		}
+	],
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": ["<leader>", "d"],
+			"after": ["d", "d"]
+		},
+		{
+			"before": ["<leader>", "h"],
+			"commands": [":nohl"]
+		},
+		{
+			"before": ["K"],
+			"commands": ["editor.action.showHover"],
+			"silent": true
+		},
+		{
+			"before": ["L"],
+			"commands": ["workbench.action.nextEditor"],
+			"silent": true
+		},
+		{
+			"before": ["H"],
+			"commands": ["workbench.action.previousEditor"],
+			"silent": true
+		}
+	],
+	"vim.visualModeKeyBindings": [
+		{
+			"before": [">"],
+			"commands": ["editor.action.indentLines"]
+		},
+		{
+			"before": ["<"],
+			"commands": ["editor.action.outdentLines"]
+		}
+	],
+	"vim.leader": "<space>",
+	"vim.handleKeys": {
+		"<C-a>": false,
+		"<C-c>": false,
+		"<C-w>": false,
+		"<C-v>": false,
+		"<C-f>": false
+	},
+	"workbench.sideBar.location": "right",
+	"editor.scrollbar.vertical": "hidden",
+	"workbench.iconTheme": "material-icon-theme",
+	"editor.fontLigatures": true,
+	"git.openRepositoryInParentFolders": "never",
+	"python.analysis.inlayHints.callArgumentNames": false,
+	"python.analysis.inlayHints.functionReturnTypes": true,
+	"python.analysis.inlayHints.pytestParameters": true,
+	"python.analysis.inlayHints.variableTypes": true,
+	"vscode-neovim.neovimExecutablePaths.win32": "C:\\Users\\AMIT\\scoop\\apps\\neovim\\current\\bin\\nvim.exe",
+	"vscode-neovim.neovimInitVimPaths.win32": "C:\\Users\\AMIT\\AppData\\Local\\nvim\\init.lua",
+	"editor.guides.bracketPairs": true,
+	"editor.renderLineHighlight": "none",
+
+	"glassit.alpha": 230,
+	"glassit.step": 75,
+	"editor.minimap.scale": 2,
+	"editor.minimap.size": "fill",
+	"editor.minimap.renderCharacters": false,
+	"editor.guides.highlightActiveIndentation": "always"
+}
