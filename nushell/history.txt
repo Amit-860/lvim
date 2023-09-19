@@ -1,0 +1,16 @@
+clear
+ls
+env | table -e
+$env | table -e
+clear
+ls
+clear
+ls
+exit
+code $nu.config
+code $nu.config-path
+exit
+code $nu.env-path
+ls
+clear
+exit

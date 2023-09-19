@@ -806,15 +806,18 @@ source ~/.zoxide.nu
 
 alias lvim = nvim -u (($env.LUNARVIM_BASE_DIR | append '\init.lua') | str join)
 
+alias ff = vifm
+alias br = broot
+
 source ~/.cache/starship/init.nu
 
-use ~/nu/nu_scripts/themes/themes/nightfly.nu
+use ~/nu_scripts/themes/themes/nightfly.nu
 $env.config = ($env.config | merge {color_config: (nightfly)})
 
-use ~/nu/nu_scripts/custom-completions/git/git-completions.nu *
-use ~/nu/nu_scripts/custom-completions/npm/npm-completions.nu *
-use ~/nu/nu_scripts/custom-completions/scoop/scoop-completions.nu *
-use ~/nu/nu_scripts/custom-completions/yarn/yarn-completion.nu *
-use ~/nu/nu_scripts/modules/maths/math_functions.nu *
+use ~/nu_scripts/custom-completions/git/git-completions.nu *
+use ~/nu_scripts/custom-completions/npm/npm-completions.nu *
+use ~/nu_scripts/custom-completions/scoop/scoop-completions.nu *
+use ~/nu_scripts/custom-completions/yarn/yarn-completion.nu *
+use ~/nu_scripts/modules/maths/math_functions.nu *
 
 fastfetch --logo-padding-top 2 --logo-padding-left 3

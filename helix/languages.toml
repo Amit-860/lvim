@@ -1,20 +1,34 @@
-# [language-server]
-# rome = { command = "rome", args = ["lsp-proxy"] }
-
-
+# Javascript and Typescript Config
 [[language]]
 name = "javascript"
 auto-format = true
 comment-token = "//"
-file-types = ["js", "mjs", "cjs"]
+file-types = ["js", "mjs", "cjs", "jsx"]
 injection-regex = "(js|javascript)"
 language-id = "javascript"
-# language-servers = [{name = "typescript-language-server"}, "rome"]
-language-servers = [{name = "typescript-language-server"}]
+language-servers = ["biome", {name = "typescript-language-server"}]
 roots = ["package.json"]
 scope = "source.js"
 shebangs = ["node"]
 indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "typescript"
+auto-format = true
+comment-token = "//"
+file-types = ["ts", "tsx"]
+injection-regex = "(js|javascript)"
+language-id = "javascript"
+# language-servers = [{name = "typescript-language-server"}, "rome"]
+language-servers = ["biome", {name = "typescript-language-server"}]
+roots = ["package.json"]
+scope = "source.js"
+shebangs = ["node"]
+indent = { tab-width = 4, unit = "    " }
+
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
 
 [language-server.typescript-language-server.config.format]
 semicolons = "insert"
@@ -43,15 +57,8 @@ includeInlayPropertyDeclarationTypeHints = true
 includeInlayVariableTypeHints = true
 includeInlayVariableTypeHintsWhenTypeMatchesName = true
 
-# [[language]]
-# name = "javascript"
-# auto-format = true
-# indent = { tab-width = 4, unit = "    " }
-# language-servers = ["typescript-language-server", "rome"]
-# formatter = {
-#     command = "rome format --stdin-file-path ${INPUT}"
-# }
 
+# Python Config
 [[language]]
 name = "python"
 scope = "source.python"
@@ -60,9 +67,24 @@ file-types = ["py","pyi","py3","pyw","ptl",".pythonstartup",".pythonrc","SConstr
 shebangs = ["python"]
 roots = ["setup.py", "setup.cfg", "pyproject.toml"]
 comment-token = "#"
-language-servers = ["pyright"]
+# language-servers = ["pyright", "ruff_lsp", "pylyzer"]
+language-servers = ["pyright", "ruff_lsp"]
 indent = { tab-width = 4, unit = "    " }
 # will get "Async jobs timed out" errors if this empty config is not added
 formatter = {command = "black", args = ["--quiet", "-"]}
 auto-format = true
 diagnostic-severity = "Hint"
+
+[language-server.ruff_lsp]
+command = "ruff-lsp" 
+config = { settings = { args = {} } }
+
+[language-server.pylyzer]
+command = "pylyzer"
+args = ["--server"]
+
+[language-server.pylyzer.config.settings.python]
+checkOnType = true
+diagnostics = true
+inlayHints = true
+smartCompletion = true

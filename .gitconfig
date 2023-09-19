@@ -1,0 +1,39 @@
+[safe]
+
+[user]
+
+[init]
+	defaultBranch = main
+[credential "helperselector"]
+    selected = manager-core
+[core]
+    pager = delta
+
+[interractive]
+    diffFilter = delta --color-only --diff-so-fancy
+
+[delta]
+    navigate = true 
+    light = false
+    side-by-side = true
+    line-numbers = true
+    features = decorations
+
+[delta "interractive"]
+    keep-plus-minus-markers = true
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
