@@ -47,11 +47,11 @@ M.config = function()
 
             },
             window = {
-                border = "double",         -- none, single, double, shadow
+                border = "single",         -- none, single, double, shadow
                 position = "bottom",       -- bottom, top
                 -- margin = { 0, 10, 1, 8 }, -- extra window margin [top, right, bottom, left]
                 margin = { 0, 19, 1, 17 }, -- extra window margin [top, right, bottom, left]
-                padding = { 2, 2, 2, 2 },  -- extra window padding [top, right, bottom, left]
+                padding = { 1, 1, 1, 1 },  -- extra window padding [top, right, bottom, left]
                 winblend = 0,
             },
             layout = {
@@ -108,7 +108,7 @@ M.config = function()
         },
         mappings = {
             [";"] = { "<cmd>Alpha<CR>", "which_key_ignore" },
-            ["w"] = { "<cmd>w!<CR>", "which_key_ignore" },
+            -- ["w"] = { "<cmd>w!<CR>", "which_key_ignore" },
             ["q"] = {
                 Q = { "<CMD>q!<CR>", "Force Quit" },
                 w = { "<CMD>wq<CR>", "Write & Quit" },
@@ -374,13 +374,23 @@ M.setup = function()
             -- U = { "<CMD>lua require'dapui'.toggle()<CR>", "Dap UI" },
             -- e = { "<CMD>lua require'dapui'.eval()<CR>", "Eval" },
         },
-        f = {
-            name = "Files",
-            f = { function() require('lvim.core.terminal').vifm_toggle() end, "vifm" },
-            t = { function() require('lvim.core.terminal').broot_toggle() end, "broot" }
-        }
+        f = { function() require('lvim.core.terminal').vifm_toggle() end, "vifm" },
 
     }, { prefix = "\\" })
+
+    which_key.register({
+        [']'] = { name = "next", { noremap = true } },
+        ['['] = { name = "prev", { noremap = true } },
+        ['s'] = { name = "start", { noremap = true } },
+        ['e'] = { name = "end", { noremap = true } },
+    }, { prefix = ']' })
+
+    which_key.register({
+        [']'] = { name = "next", { noremap = true } },
+        ['['] = { name = "prev", { noremap = true } },
+        ['s'] = { name = "start", { noremap = true } },
+        ['e'] = { name = "end", { noremap = true } },
+    }, { prefix = '[' })
 
     which_key.register({
         a = { name = "around" },
@@ -404,3 +414,4 @@ M.setup = function()
 end
 
 return M
+

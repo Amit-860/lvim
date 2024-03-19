@@ -296,4 +296,6 @@ M.broot_toggle = function()
     end
     broot:toggle()
 end
+
 return M
+

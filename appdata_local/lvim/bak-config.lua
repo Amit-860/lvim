@@ -1,10 +1,11 @@
--- CONFIG : LunarVIM
+-- Video  Tutorials: https://www.youtube.com/watch?v=sFA11kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
+-- Forum: https://www.reddit.com/r/lunarvim/
+-- Discord: https://discord.com/invite/Xb9B4Ny
+-- Enable powershell as your default shell
+
 -- "C:\Program Files\PowerShell\7\pwsh.exe" -ExecutionPolicy Bypass C:\Users\AMIT\.local\bin\lvid.ps1
 -- C:\Users\AMIT\scoop\shims\nu.exe C:\Users\AMIT\.local\bin\lvid.nu
 
-vim.loader.enable()
-
--- Enable powershell as your default shell
 vim.opt.shell = "pwsh.exe -NoLogo"
 vim.opt.shellcmdflag =
 "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
@@ -26,12 +27,12 @@ vim.g.clipboard = {
     },
 }
 
+
 -- setting for neovide
 if vim.g.neovide then
     vim.cmd([[set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
  		  \,a:blinkwait1000-blinkoff500-blinkon500-Cursor/lCursor]])
-    -- vim.o.guifont = "JetBrainsMono Nerd Font Mono:h10.4"
-    vim.o.guifont = "Iosevka Nerd Font Mono:h11"
+    vim.o.guifont = "JetBrainsMono Nerd Font Mono:h10.4"
     vim.g.neovide_padding_top = 0
     vim.g.neovide_padding_bottom = 0
     vim.g.neovide_padding_right = 0
@@ -49,61 +50,47 @@ if vim.g.neovide then
     vim.g.neovide_underline_automatic_scaling = true
     vim.g.neovide_no_idle = false
     vim.g.neovide_cursor_unfocused_outline_width = 0.05
-    vim.g.neovide_confirm_quit = true
 
     vim.g.neovide_transparency = 0.75
-    vim.g.neovide_fullscreen = false
+    vim.g.neovide_fullscreen = true
 
-    vim.o.winblend = 50
+    vim.o.winblend = 15
     vim.o.pumblend = 50
-
-    vim.opt.cursorline = true
 
     lvim.transparent_window = false
     lvim.builtin.telescope.defaults.winblend = 75
     lvim.builtin.which_key.setup.window.winblend = 75
     lvim.builtin['terminal'].float_opts.winblend = 70
-    lvim.builtin.cmp.window = {
-        completion = nil,
-        documentation = nil
-    }
     lvim.colorscheme = "terafox"
-    -- lvim.colorscheme = "nightfly"
 else
     lvim.transparent_window = true
-    lvim.colorscheme = "rose-pine"
-    -- lvim.colorscheme = "terafox"
-    vim.opt.cursorline = true
+    lvim.colorscheme = "terafox"
+    -- lvim.colorscheme = "github_dark_dimmed"
 end
 
-lvim.leader = "space"
+-- lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
 lvim.lsp.installer.setup.automatic_installation = false
 lvim.builtin.autopairs.active = true
 lvim.builtin.which_key.active = true
-lvim.lazy.opts.checker = { frequency = 604800 }
+lvim.lazy.opts.checker = {
+    frequency = 604800,
+}
 
 vim.opt.cmdwinheight = 1
 vim.opt.cmdheight = 0
 vim.opt.relativenumber = true
+vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
--- vim.opt.list = true
+vim.opt.list = true
 -- vim.opt.listchars:append("space:⋅")
 -- vim.opt.listchars:append("eol:↴")
--- vim.opt.foldenable = false
--- vim.opt.foldlevel = 2
--- vim.opt.foldlevelstart = 2
--- vim.opt.foldnestmax = 2
--- vim.opt.foldmethod = "indent" -- folding set to "expr" for treesitter based folding
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
-
-vim.o.foldcolumn = '0' -- '0' is not bad
-vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldenable = false
-vim.opt.foldlevelstart = 1
-vim.opt.foldnestmax = 2
-
-vim.opt.timeoutlen = 300
+-- vim.opt.foldmethod = "expr"                     -- folding set to "expr" for treesitter based folding
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+vim.opt.foldnestmax = 10
+vim.opt.foldlevel = 4
+vim.opt.foldenable = false
+vim.opt.timeoutlen = 500
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -112,22 +99,24 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
+lvim.leader = "space"
+
 
 -- add your own keymapping
 lvim.keys.insert_mode["<C-S>"] = "<esc>:wa<cr>"
-lvim.keys.insert_mode["<C-s>"] = "<esc>:w<cr>"
+lvim.keys.normal_mode["<leader>w"] = ":w!<cr>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<C-S>"] = ":wa<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<M-u>"] = ":Telescope undo<CR>"
-lvim.keys.normal_mode["<F5>"] = ":lua require('dap').continue()<cr>"
-lvim.keys.normal_mode["<F7>"] = ":lua require('dap').toggle_breakpoint()<cr>"
-lvim.keys.normal_mode["<M-b>"] = ":lua require('dap').toggle_breakpoint()<cr>"
-lvim.keys.normal_mode["<F8>"] = ":lua require('dap').step_out()<cr>"
-lvim.keys.normal_mode["<F9>"] = ":lua require('dap').step_into()<cr>"
-lvim.keys.normal_mode["<M-n>"] = ":lua require('dap').step_into()<cr>"
-lvim.keys.normal_mode["<F10>"] = ":lua require('dap').step_over()<cr>"
+--lvim.keys.normal_mode["<F5>"] = function() require('dap').continue() end
+--lvim.keys.normal_mode["<F7>"] = function() require('dap').toggle_breakpoint() end
+--lvim.keys.normal_mode["<M-b>"] = function() require('dap').toggle_breakpoint() end
+--lvim.keys.normal_mode["<F8>"] = function() require('dap').step_out() end
+--lvim.keys.normal_mode["<F9>"] = function() require('dap').step_into() end
+--lvim.keys.normal_mode["<M-.>"] = function() require('dap').step_into() end
+--lvim.keys.normal_mode["<F10>"] = function() require('dap').step_over() end
 lvim.keys.normal_mode["<C-q>"] = ":close<CR>"
 
 
@@ -140,6 +129,7 @@ vim.keymap.set({ "n", "o", "x" }, "gh", '0', { noremap = true, silent = true, de
 vim.keymap.set({ "n", "o", "x" }, "gl", '$', { noremap = true, silent = true, desc = "Goto EOL" })
 vim.keymap.set({ "i", "n" }, "<M-i>", "<CMD>lua vim.lsp.buf.signature_help()<CR>")
 vim.keymap.set("n", "<C-_>", "<Plug>(comment_toggle_linewise_current)")
+vim.keymap.set({ "n" }, "<M-n>", "<cmd>lua require('ts-node-action').node_action()<cr>", { desc = "Trigger Node Action" })
 
 vim.keymap.set({ "n", "o", "x", "v" }, "w", "<cmd>lua require('spider').motion('w')<CR>",
     { desc = "Spider-w", noremap = true })
@@ -162,7 +152,10 @@ lvim.builtin.which_key.mappings["p"] = { "<cmd>Telescope projects<CR>", "Project
 lvim.builtin.which_key.mappings["<leader>"] = { "<cmd>Telescope buffers<CR>", "which_key_ignore" }
 lvim.builtin.which_key.mappings["E"] = { "<Plug>(Scalpel)", "Scalpel" }
 lvim.builtin.which_key.mappings["m"] = {
-    name = "Marks",
+    name = "Harpoon",
+    -- h = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Harpoon" },
+    m = { "<cmd>Telescope harpoon marks<cr>", "Show Marked Files" },
+    a = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add/Mark File" },
 }
 lvim.builtin.which_key.mappings["t"] = {
     name = "+Trouble",
@@ -174,7 +167,7 @@ lvim.builtin.which_key.mappings["t"] = {
     w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 
-lvim.builtin.which_key.mappings["x"] = {
+lvim.builtin.which_key.mappings["z"] = {
     name = "+Extra",
     d = {
         name = "+Diff View",
@@ -189,27 +182,29 @@ lvim.builtin.which_key.mappings["x"] = {
 
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
+    -- for input mode
     i = {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
     },
+    -- for normal mode
     n = {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
     },
 }
 
-lvim.builtin.telescope.on_config_done = function(telescope)
-    pcall(telescope.load_extension, "ui-select")
-    pcall(telescope.load_extension, "harpoon")
-    pcall(telescope.load_extension, "lsp_handlers")
-    pcall(telescope.load_extension, "vim_bookmarks")
-    pcall(telescope.load_extension, "undo")
-    pcall(telescope.load_extension, "yank_history")
-    pcall(telescope.load_extension, "dap")
-end
+--  lvim.builtin.telescope.on_config_done = function(telescope)
+  --  pcall(telescope.load_extension, "ui-select")
+  --  pcall(telescope.load_extension, "harpoon")
+  --  pcall(telescope.load_extension, "lsp_handlers")
+  --  pcall(telescope.load_extension, "vim_bookmarks")
+  --  pcall(telescope.load_extension, "undo")
+  --  pcall(telescope.load_extension, "yank_history")
+  --  pcall(telescope.load_extension, "dap")
+--  end
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -222,7 +217,9 @@ lvim.builtin.breadcrumbs.active = false
 lvim.builtin.indentlines.active = false
 lvim.builtin.illuminate.active = false
 
-lvim.builtin.treesitter.ensure_installed = { "html", "javascript", "lua", "python", "typescript", "tsx", "css" }
+lvim.builtin.treesitter.ensure_installed = { "html", "javascript", "lua", "json", "python", "typescript", "tsx",
+    "css" }
+
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
 lvim.builtin.treesitter.rainbow.enable = true
@@ -235,25 +232,29 @@ lvim.builtin.treesitter.autotag = {
     enable_rename = true,
     enable_close = true,
     enable_close_on_slash = true,
-    filetypes = { 'html', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'xml' }
+    filetypes = {
+        'html', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'xml'
+    }
 }
 lvim.builtin.treesitter.incremental_selection.enable = true
 lvim.builtin.treesitter.textobjects.swap.enable = true
 lvim.builtin.treesitter.textobjects.select.enable = true
 lvim.builtin.treesitter.textobjects.move.enable = true
 lvim.builtin.cmp.cmdline.enable = true
-lvim.builtin.treesitter.textsubjects.enable = true
 
 
 -- NOTE: nul_ls formatters
--- local formatters = require("lvim.lsp.null-ls.formatters")
--- formatters.setup({})
+local formatters = require("lvim.lsp.null-ls.formatters")
+formatters.setup({})
 
 
 -- NOTE: nul_ls linters
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
-    { command = "pylint", filetypes = { 'python' } },
+    {
+        command = "pylint",
+        filetypes = { 'python' }
+    },
 })
 
 
@@ -285,7 +286,9 @@ require("lvim.lsp.manager").setup("rome", {
         },
         linter = {
             enabled = true,
-            rules = { all = true }
+            rules = {
+                all = true
+            }
         },
         organizeImports = {
             enabled = true
@@ -300,52 +303,25 @@ require("lvim.lsp.manager").setup("ruff_lsp", ruff_opts)
 
 
 -- NOTE: plugin config
-lvim.plugins = require('myPlugins')
+-- lvim.plugins = require('myPlugins')
 
 
 -- NOTE: autocommands
 lvim.autocommands = {
-    { "BufEnter",
+    {
+        "BufEnter",
         {
             pattern = { "*.http" },
             command = "set filetype=http"
-        },
-    },
-    { "BufWritePre",
-        {
-            pattern = "*",
-            callback = function(args)
-                require("conform").format({ bufnr = args.buf, quiet = true, async = true })
-            end,
         }
     },
-    -- { "VimEnter",
-    --     {
-    --         pattern = "*",
-    --         callback = function(args)
-    --             vim.api.nvim_set_hl(0, "CursorLine", { guibg = nil })
-    --             vim.api.nvim_set_hl(0, "CursorLineNr",
-    --                 { cterm = nil, bg = nil, fg = '#f6c168', bold = true })
-    --         end,
-    --     }
-    -- }
+--    {
+--        "BufWritePre",
+--        {
+--            pattern = "*",
+--            callback = function(args)
+--                require("conform").format({ bufnr = args.buf, quiet = true, async = true })
+--            end,
+--        }
+--    },
 }
-
-if vim.g.neovide then
-    lvim.autocommands = {
-        { "VimEnter",
-            {
-                pattern = "*",
-                callback = function()
-                    local toggle = true
-                    local function toggle_neovide_fullscreen()
-                        vim.g.neovide_fullscreen = not toggle
-                        toggle = not toggle
-                    end
-                    vim.keymap.set("n", "<leader>xf", toggle_neovide_fullscreen,
-                        { desc = "Toggle Neovide Fullscreen", noremap = true })
-                end
-            },
-        }
-    }
-end

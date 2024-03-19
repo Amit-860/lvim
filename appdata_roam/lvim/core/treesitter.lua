@@ -56,7 +56,7 @@ function M.config()
         autotag = { enable = false },
         textobjects = {
             swap = {
-                enable = true,
+                enable = false,
                 swap_next = {
                     ['<M-a>'] = "@parameter.inner"
                 },
@@ -95,52 +95,67 @@ function M.config()
                 set_jumps = true, -- whether to set jumps in the jumplist
                 goto_next_start = {
                     [']c'] = '@class.outer',
-                    ['][c'] = '@class.inner',
+                    [']sc'] = '@class.inner',
 
                     [']f'] = '@function.outer',  -- outside of the next function
-                    ['][f'] = '@function.inner', -- inside the start of the next function
+                    [']sf'] = '@function.inner', -- inside the start of the next function
 
                     [']l'] = '@loop.outer',
-                    ['][l'] = '@loop.inner',
+                    [']sl'] = '@loop.inner',
 
                     [']d'] = '@conditional.outer',
-                    ['][d'] = '@conditional.inner',
+                    [']sd'] = '@conditional.inner',
 
-                    [']a'] = '@parameter.inner',
+                    -- [']]'] = { query = { '@parameter.inner', '@attribute.inner', '@assignment.outer', '@call.inner',
+                    --     '@statement.outer', '@function.inner', '@loop.inner', '@return.inner', '@scopename.inner',
+                    --     '@conditional.inner', } },
+                    [']]'] = { query = { '@parameter.inner', '@attribute.inner', '@assignment.lhs', '@assignment.rhs' } },
                 },
                 goto_next_end = {
-                    [']]c'] = '@class.inner',
-                    [']]f'] = '@function.inner', -- inside the end of the next function
-                    [']]d'] = '@conditional.inner',
-                    [']]l'] = '@loop.inner',
+                    [']ec'] = '@class.inner',
+                    [']ef'] = '@function.inner', -- inside the end of the next function
+                    [']ed'] = '@conditional.inner',
+                    [']el'] = '@loop.inner',
                 },
                 goto_previous_start = {
                     ['[c'] = '@class.outer',
-                    ['[[c'] = '@class.inner',
+                    ['[sc'] = '@class.inner',
 
                     ['[f'] = '@function.outer',  -- outside of the previous function
-                    ['[[f'] = '@function.inner', -- inside the start of the previous function
+                    ['[sf'] = '@function.inner', -- inside the start of the previous function
 
                     ['[l'] = '@loop.outer',
-                    ['[[l'] = '@loop.inner',
+                    ['[sl'] = '@loop.inner',
 
                     ['[d'] = '@conditional.outer',
-                    ['[[d'] = '@conditional.inner',
+                    ['[sd'] = '@conditional.inner',
 
-                    ['[a'] = '@parameter.inner',
+                    -- ['[['] = { query = { '@parameter.inner', '@attribute.inner', '@assignment.outer', '@call.inner',
+                    --     '@statement.outer', '@function.inner', '@loop.inner', '@return.inner', '@scopename.inner',
+                    --     '@conditional.inner', } },
+                    ['[['] = { query = { '@parameter.inner', '@attribute.inner', '@assignment.lhs', '@assignment.rhs' } },
                 },
                 goto_previous_end = {
-                    ['[]c'] = '@class.inner',
-                    ['[]f'] = '@function.inner', -- inside of the end of the previous function
-                    ['[]l'] = '@loop.inner',
-                    ['[]d'] = '@conditional.inner',
+                    ['[ec'] = '@class.inner',
+                    ['[ef'] = '@function.inner', -- inside of the end of the previous function
+                    ['[el'] = '@loop.inner',
+                    ['[ed'] = '@conditional.inner',
+
+                    ['[]'] = "@nothing", -- just to remove default vim keybindings
+                    [']['] = "@nothing"
                 },
             },
 
         },
         textsubjects = {
             enable = false,
-            keymaps = { ["."] = "textsubjects-smart", [";"] = "textsubjects-big" },
+            keymaps = { ["r"] = "textsubjects-smart", ["R"] = "textsubjects-big" },
+            prev_selection = ',', -- (Optional) keymap to select the previous selection
+            -- keymaps = {
+            --     ['.'] = 'textsubjects-smart',
+            --     [';'] = 'textsubjects-container-outer',
+            --     ['i;'] = 'textsubjects-container-inner',
+            -- },
         },
         playground = {
             enable = false,
@@ -179,6 +194,7 @@ function M.config()
                 node_decremental = "N",
             },
         },
+
     }
 end
 
@@ -207,6 +223,10 @@ function M.setup()
     local ts_utils = require "nvim-treesitter.ts_utils"
     ts_utils.is_in_node_range = vim.treesitter.is_in_node_range
     ts_utils.get_node_range = vim.treesitter.get_node_range
+
+    local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+    vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+    vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 end
 
 return M

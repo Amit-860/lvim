@@ -119,7 +119,7 @@ function M.config()
             spell_suggest = {
                 theme = "cursor",
                 initial_mode = "normal"
-            }
+            },
         },
         extensions = {
             fzf = {
@@ -155,7 +155,7 @@ function M.config()
                 },
             },
             undo = {
-                use_delta = false,
+                use_delta = true,
                 use_custom_command = nil, -- setting this implies `use_delta = false`. Accepted format is: { "bash", "-c", "echo '$DIFF' | delta" }
                 layout_strategy = "vertical",
                 layout_config = {
@@ -165,16 +165,17 @@ function M.config()
                 diff_context_lines = vim.o.scrolloff,
                 entry_format = "state #$ID, $STAT, $TIME",
                 time_format = "",
+                initial_mode = "normal",
                 mappings = {
+                    i = {
+                        ["<c-Y>"] = require("telescope-undo.actions").yank_additions,
+                        ["<c-y>"] = require("telescope-undo.actions").yank_deletions,
+                        ["<c-u>"] = require("telescope-undo.actions").restore
+                    },
                     n = {
-                        -- IMPORTANT: Note that telescope-undo must be available when telescope is configured if
-                        -- you want to replicate these defaults and use the following actions. This means
-                        -- installing as a dependency of telescope in it's `requirements` and loading this
-                        -- extension from there instead of having the separate plugin definition as outlined
-                        -- above.
-                        ["y"] = require("telescope-undo.actions").yank_additions,
-                        ["Y"] = require("telescope-undo.actions").yank_deletions,
-                        ["u"] = require("telescope-undo.actions").restore,
+                        ["Y"] = require("telescope-undo.actions").yank_additions,
+                        ["y"] = require("telescope-undo.actions").yank_deletions,
+                        ["u"] = require("telescope-undo.actions").restore
                     },
                 },
             },
