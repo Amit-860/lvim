@@ -596,16 +596,16 @@ local plugins = {
         dependencies = "nvim-treesitter/nvim-treesitter",
         lazy = false,                  -- plugin lazy-loads itself. Can also load on filetypes.
     },
-    {
-        'renerocksai/telekasten.nvim',
-        cmd = { "Telekasten", "Telekasten find_notes", "Telekasten show_tags", "Telekasten new_note" },
-        dependencies = { 'nvim-telescope/telescope.nvim', 'renerocksai/calendar-vim' },
-        config = function()
-            require('telekasten').setup({
-                home = vim.fn.expand("C:/Users/AMIT/zettelkasten/"),
-            })
-        end
-    },
+    -- {
+    --     'renerocksai/telekasten.nvim',
+    --     cmd = { "Telekasten", "Telekasten find_notes", "Telekasten show_tags", "Telekasten new_note" },
+    --     dependencies = { 'nvim-telescope/telescope.nvim', 'renerocksai/calendar-vim' },
+    --     config = function()
+    --         require('telekasten').setup({
+    --             home = vim.fn.expand("C:/Users/AMIT/zettelkasten/"),
+    --         })
+    --     end
+    -- },
     -- {
     --     'boltlessengineer/smart-tab.nvim',
     --     event = "BufRead",

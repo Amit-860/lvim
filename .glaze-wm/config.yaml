@@ -1,0 +1,298 @@
+general:
+    # Whether to automatically focus windows underneath the cursor.
+    focus_follows_cursor: false
+
+    # Whether to jump the cursor between windows focused by the WM.
+    cursor_follow_focus: false
+
+    # Whether to switch back and forth between the previously focused workspace
+    # when focusing the current workspace.
+    toggle_workspace_on_refocus: false
+
+    # Whether to show floating windows as always on top.
+    show_floating_on_top: false
+
+    # Amount to move floating windows by (eg. when using `alt+<hjkl>` on a floating window)
+    floating_window_move_amount: "5%"
+
+    # *Strongly* recommended to set to 'false'. Whether to globally enable/disable
+    # window transition animations (on minimize, close, etc). Set to 'unchanged'
+    # to make no setting changes.
+    window_animations: "unchanged"
+
+gaps:
+    # Gap between adjacent windows.
+    inner_gap: "6px"
+
+    # Gap between windows and the screen edge.
+    outer_gap: "10px"
+
+# Highlight active/inactive windows with a colored border.
+# ** Exclusive to Windows 11 due to API limitations.
+focus_borders:
+    active:
+        enabled: true
+        color: "#09334e"
+
+    inactive:
+        enabled: false
+        color: "#522517"
+
+bar:
+    height: "22px"
+    position: "top"
+    opacity: 1.0
+    background: "#20242cc4"
+    foreground: "#ffffff"
+    font_family: "Segoe UI"
+    font_size: "12px"
+    padding: "0px 0px 0px 0px"
+    margin: "0px 0px 0px 0px"
+    offset_x: 0
+    offset_y: 0
+    border_radius: 0
+    components_left:
+        - type: "workspaces"
+          margin: "0px 0px"
+          padding: "0px 0px"
+          focused_workspace_border_color: "transparent"
+          default_workspace_border_color: "transparent"
+          focused_workspace_background: "#0d5b8f"
+          focused_workspace_foreground: "#ffffff"
+
+          displayed_workspace_background: "#0d5b8f"
+          displayed_workspace_foreground: "#ffffff"
+
+          default_workspace_background: "#242936"
+          # default_workspace_background: "#242936"
+        - type: "binding mode"
+          background: "#ffffff33"
+          margin: "0 4px 0 0"
+          padding: "0 8px"
+        - type: "cpu"
+          label: "CPU: {percent_usage}%"
+          refresh_interval_ms: 1000
+          margin: "0 0 0 9px"
+        - type: "gpu"
+          label: "GPU: {percent_usage}%"
+          # How often this counter is refreshed.
+          refresh_interval_ms: 1000
+          margin: "0 0 0 11px"
+        - type: "memory"
+          label: "RAM: {percent_usage}%"
+          refresh_interval_ms: 1000
+          margin: "0 0 0 11px"
+
+    components_center:
+        - type: "window title"
+        - type: "music"
+          label_not_playing: ""
+          label_paused: "    |    ❚❚ {song_title} - {artist_name}"
+          label_playing: "    |    ▶️ {song_title} - {artist_name}"
+          max_title_length: 20
+          max_artist_length: 20
+    components_right:
+        - type: "system tray"
+          margin: "0 4px 4px 0"
+          padding: "4px 0 0 4px"
+        - type: "tiling direction"
+          label_horizontal: "⮂"
+          label_vertical: "⮁"
+          background: "#ffffff33"
+          margin: "0 4px"
+          padding: "0 8px"
+        - type: "weather"
+          margin: "0px 0px 0px 8px"
+          latitude: 23.3441
+          longitude: 85.3096
+          label: "{temperature_celsius}°C"
+          label_sun: "☀️ {temperature_celsius}°C"
+          label_moon: "🌙 {temperature_celsius}°C"
+          label_cloud_moon: "🌙☁️ {temperature_celsius}°C"
+          label_cloud_sun: "⛅ {temperature_celsius}°C"
+          label_cloud_moon_rain: "🌙🌧️ {temperature_celsius}°C"
+          label_cloud_sun_rain: "🌦️ {temperature_celsius}°C"
+          label_cloud_rain: "🌧️ {temperature_celsius}°C"
+          label_snow_flake: "❄️ {temperature_celsius}°C"
+          label_thunderstorm: "⚡ {temperature_celsius}°C"
+          label_cloud: "☁️ {temperature_celsius}°C"
+        - type: "clock"
+          time_formatting: "hh:mm tt    MMM d, ddd  "
+          margin: "0 0 0 11px"
+
+workspaces:
+    - name: "1"
+    - name: "2"
+    - name: "3"
+    - name: "4"
+    - name: "5"
+    - name: "6"
+    - name: "7"
+    - name: "8"
+    - name: "9"
+
+window_rules:
+    # Task Manager requires admin privileges to manage and should be ignored unless running
+    # the WM as admin.
+    - command: "ignore"
+      match_process_name: "/Taskmgr|ScreenClippingHost|Adguard|AdguardSvc|PowerToys.Peek.UI/"
+
+    # Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
+    - command: "set floating"
+      match_class_name: "#32770"
+
+    # Some applications (eg. Steam) have borders that extend past the normal border size.
+    - command: "resize borders 0px -7px -7px -7px"
+      match_process_name: "steam"
+
+binding_modes:
+    - name: "resize"
+      keybindings:
+          # Resize focused window by a percentage or pixel amount.
+          - command: "resize width -2%"
+            bindings: ["H", "Left"]
+          - command: "resize width +2%"
+            bindings: ["L", "Right"]
+          - command: "resize height +2%"
+            bindings: ["K", "Up"]
+          - command: "resize height -2%"
+            bindings: ["J", "Down"]
+          # Press enter/escape to return to default keybindings.
+          - command: "binding mode none"
+            bindings: ["Escape", "Enter"]
+
+keybindings:
+    # Shift focus in a given direction.
+    - command: "focus left"
+      bindings: ["F13+H", "F13+Left"]
+    - command: "focus right"
+      bindings: ["F13+L", "F13+Right"]
+    - command: "focus up"
+      bindings: ["F13+K", "F13+Up"]
+    - command: "focus down"
+      bindings: ["F13+J", "F13+Down"]
+
+    # Move focused window in a given direction.
+    - command: "move left"
+      bindings: ["F13+Shift+H", "F13+Shift+Left"]
+    - command: "move right"
+      bindings: ["F13+Shift+L", "F13+Shift+Right"]
+    - command: "move up"
+      bindings: ["F13+Shift+K", "F13+Shift+Up"]
+    - command: "move down"
+      bindings: ["F13+Shift+J", "F13+Shift+Down"]
+
+    # Resize focused window by a percentage or pixel amount.
+    - command: "resize width -2%"
+      binding: "F13+U"
+    - command: "resize width +2%"
+      binding: "F13+P"
+    - command: "resize height +2%"
+      binding: "F13+O"
+    - command: "resize height -2%"
+      binding: "F13+I"
+
+    # As an alternative to the resize keybindings above, resize mode enables resizing via
+    # HJKL or arrow keys. The binding mode is defined above with the name "resize".
+    - command: "binding mode resize"
+      binding: "F13+R"
+
+    # Change tiling direction. This determines where new tiling windows will be inserted.
+    - command: "tiling direction toggle"
+      binding: "F13+V"
+
+    # Change focus between floating / tiling windows.
+    - command: "focus mode toggle"
+      binding: "F13+Space"
+
+    # Change the focused window to be floating / tiling.
+    - command: "toggle floating"
+      binding: "F13+Shift+Space"
+
+    # Change the focused window to be maximized / unmaximized.
+    - command: "toggle maximized"
+      binding: "F13+Shift+M"
+
+    # Minimize focused window.
+    - command: "set minimized"
+      binding: "F13+M"
+
+    # Close focused window.
+    - command: "close"
+      binding: "F13+Shift+Q"
+
+    # Kill GlazeWM process safely.
+    - command: "exit wm"
+      binding: "F13+Shift+X"
+
+    # Re-evaluate configuration file.
+    - command: "reload config"
+      binding: "F13+Shift+R"
+
+    # Launch CMD terminal (alternatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
+    # to start Windows Terminal and Git Bash respectively.
+    - command: "exec C:\\Users\\AMIT\\scoop\\apps\\windows-terminal-preview\\current\\WindowsTerminal.exe"
+      binding: "F13+Enter"
+
+    - command: "exec C:\\Users\\AMIT\\scoop\\apps\\vscode\\current\\Code.exe"
+      binding: "F13+Shift+Enter"
+
+    # Focus the workspace that last had focus.
+    - command: "focus workspace recent"
+      binding: "F13+Y"
+
+    # Focus the next/previous workspace defined in `workspaces` config.
+    - command: "focus workspace next"
+      binding: "F13+T"
+    - command: "focus workspace prev"
+      binding: "F13+Shift+T"
+
+    # Change focus to a workspace defined in `workspaces` config.
+    - command: "focus workspace 1"
+      binding: "F13+1"
+    - command: "focus workspace 2"
+      binding: "F13+2"
+    - command: "focus workspace 3"
+      binding: "F13+3"
+    - command: "focus workspace 4"
+      binding: "F13+4"
+    - command: "focus workspace 5"
+      binding: "F13+5"
+    - command: "focus workspace 6"
+      binding: "F13+6"
+    - command: "focus workspace 7"
+      binding: "F13+7"
+    - command: "focus workspace 8"
+      binding: "F13+8"
+    - command: "focus workspace 9"
+      binding: "F13+9"
+
+    # Move focused workspace to a monitor in a given direction.
+    - command: "move workspace left"
+      binding: "F13+A"
+    - command: "move workspace right"
+      binding: "F13+F"
+    - command: "move workspace up"
+      binding: "F13+D"
+    - command: "move workspace down"
+      binding: "F13+S"
+
+    # Move focused window to a workspace defined in `workspaces` config.
+    - commands: ["move to workspace 1", "focus workspace 1"]
+      binding: "F13+Shift+1"
+    - commands: ["move to workspace 2", "focus workspace 2"]
+      binding: "F13+Shift+2"
+    - commands: ["move to workspace 3", "focus workspace 3"]
+      binding: "F13+Shift+3"
+    - commands: ["move to workspace 4", "focus workspace 4"]
+      binding: "F13+Shift+4"
+    - commands: ["move to workspace 5", "focus workspace 5"]
+      binding: "F13+Shift+5"
+    - commands: ["move to workspace 6", "focus workspace 6"]
+      binding: "F13+Shift+6"
+    - commands: ["move to workspace 7", "focus workspace 7"]
+      binding: "F13+Shift+7"
+    - commands: ["move to workspace 8", "focus workspace 8"]
+      binding: "F13+Shift+8"
+    - commands: ["move to workspace 9", "focus workspace 9"]
+      bindings: ["F13+Shift+9"]
